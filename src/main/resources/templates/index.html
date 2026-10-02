@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Course Registration Portal</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
+</head>
+<body>
+<header>
+    <h1>🎓 Course Registration Portal</h1>
+    <p>Register for our hands-on technology courses</p>
+</header>
+
+<main>
+    <section class="card">
+        <h2>Available courses</h2>
+        <table>
+            <thead>
+            <tr><th>Code</th><th>Course</th><th>Duration</th><th>Seats</th></tr>
+            </thead>
+            <tbody>
+            <tr th:each="course : ${courses}">
+                <td th:text="${course.code}">DSO101</td>
+                <td th:text="${course.title}">DevSecOps Foundations</td>
+                <td th:text="${course.durationDays} + ' day(s)'">2 day(s)</td>
+                <td th:text="${course.seats}">60</td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <section class="card">
+        <h2>Register</h2>
+        <p class="error" th:if="${error}" th:text="${error}">Error</p>
+        <form th:action="@{/register}" th:object="${form}" method="post">
+            <label>First name <input type="text" th:field="*{firstName}" required maxlength="60"></label>
+            <label>Last name <input type="text" th:field="*{lastName}" required maxlength="60"></label>
+            <label>Email <input type="email" th:field="*{email}" required maxlength="120"></label>
+            <label>Phone (optional) <input type="tel" th:field="*{phone}" maxlength="20"></label>
+            <label>Course
+                <select th:field="*{courseCode}" required>
+                    <option value="">-- choose a course --</option>
+                    <option th:each="course : ${courses}" th:value="${course.code}"
+                            th:text="${course.code} + ' - ' + ${course.title}">DSO101</option>
+                </select>
+            </label>
+            <button type="submit">Register</button>
+        </form>
+    </section>
+</main>
+
+<footer>
+    <span th:text="'Version ' + ${appVersion}">Version 1.0.0</span> ·
+    Certificate storage:
+    <strong th:text="${storageConfigured} ? 'configured' : 'not configured'">configured</strong> ·
+    DevSecOps workshop training application
+</footer>
+</body>
+</html>

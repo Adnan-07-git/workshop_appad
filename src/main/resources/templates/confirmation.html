@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Registration confirmed</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
+</head>
+<body>
+<header>
+    <h1>✅ Registration confirmed</h1>
+</header>
+<main>
+    <section class="card">
+        <p class="message" th:text="${confirmation.message}">Hi ..., you are registered.</p>
+        <p>Your student ID: <strong th:text="${confirmation.studentId}">5</strong></p>
+        <p><a th:href="@{/}">← Back to courses</a></p>
+    </section>
+</main>
+<footer>
+    <span th:text="'Version ' + ${appVersion}">Version 1.0.0</span> · DevSecOps workshop training application
+</footer>
+</body>
+</html>

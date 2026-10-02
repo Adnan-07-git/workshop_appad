@@ -1,0 +1,26 @@
+# =====================================================================
+#  ⚠️  INTENTIONALLY INSECURE DOCKERFILE — FOR TRAINING ONLY  ⚠️
+#  Used in Day 1, Lab 06 (Trivy). Every line below is a bad practice.
+#  Never copy this into a real project.
+# =====================================================================
+
+# Old base image (2023) with a full JDK -> many unpatched vulnerabilities
+FROM eclipse-temurin:21.0.1_12-jdk-jammy
+
+# Secrets baked into the image -> readable by anyone who pulls it
+ENV AWS_ACCESS_KEY_ID=AKIAQ3MZ7KX4WB2RT6PN
+ENV AWS_SECRET_ACCESS_KEY=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
+
+# Unnecessary tools -> bigger attack surface
+RUN apt-get update && apt-get install -y curl wget vim netcat-openbsd
+
+WORKDIR /app
+COPY target/workshop-app.jar app.jar
+
+# Everyone can modify the application
+RUN chmod 777 app.jar
+
+EXPOSE 8081
+
+# No USER instruction -> runs as root. No HEALTHCHECK.
+ENTRYPOINT ["java", "-jar", "app.jar"]

@@ -1,0 +1,17 @@
+# Build output
+target/
+
+# Logs and local scan reports
+*.log
+trivy-report.txt
+gitleaks-report.json
+
+# IDE files
+.idea/
+*.iml
+.vscode/
+.DS_Store
+
+# Never commit keys or local environment files
+*.pem
+.env
